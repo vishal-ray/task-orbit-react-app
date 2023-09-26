@@ -9,7 +9,7 @@ const SignUpRouter = () => {
 
     return(
         <>
-        <Navbari></Navbari>
+        <Navbari mode = "signup"></Navbari>
         <SignUp></SignUp>
         <Footer></Footer>
         </>       

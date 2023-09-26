@@ -7,7 +7,7 @@ const Home = () => {
 
     return(
         <>
-        <Navbari></Navbari>
+        <Navbari mode = "home"></Navbari>
         <Sidebar></Sidebar>
         <Footer></Footer>
         </>       

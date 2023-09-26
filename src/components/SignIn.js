@@ -1,26 +1,44 @@
-import React from 'react';
+import React,{useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import UserService from '../serivces/UserService';
 
 
 const SignIn = () => {
+
+  const[emailId,setEmailID] = useState('')
+  const[password,setPassword] = useState('')
+  const navigate = useNavigate();
+
+  const signin = (e) =>{
+    const user = {emailId,password}
+    UserService.signInUser(user).then((response) =>{
+      console.log(response.data)
+      window.sessionStorage.setItem('Authorization',response.data.jwtToken)
+      
+    }).catch(error =>{
+      console.log(error)
+    })
+  }
     return(
         <div className='container-fluid' style={{ width: 700, marginTop: 30 }}>
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-  integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-  crossOrigin="anonymous"
-/>
+
 <form>
   {/* Email input */}
   <div className="form-outline mb-4 pt-100">
-    <input type="email" id="form2Example1" className="form-control" />
+    <input type="email" id="form2Example1" className="form-control" placeholder='Email ID'
+    value={emailId}
+    onChange={(e)=>setEmailID(e.target.value)}
+    required/>
     <label className="form-label" htmlFor="form2Example1">
       Email address
     </label>
   </div>
   {/* Password input */}
   <div className="form-outline mb-4">
-    <input type="password" id="form2Example2" className="form-control" />
+    <input type="password" id="form2Example2" className="form-control" placeholder='Password'
+    value={password}
+    onChange={(e)=>setPassword(e.target.value)}
+    required/>
     <label className="form-label" htmlFor="form2Example2">
       Password
     </label>
@@ -29,27 +47,14 @@ const SignIn = () => {
   <div className="row mb-4">
     <div className="col d-flex justify-content-center">
       {/* Checkbox */}
-      <div className="form-check">
-        <input
-          className="form-check-input"
-          type="checkbox"
-          defaultValue=""
-          id="form2Example31"
-          defaultChecked=""
-        />
-        <label className="form-check-label" htmlFor="form2Example31">
-          {" "}
-          Remember me{" "}
-        </label>
-      </div>
     </div>
     <div className="col">
-      {/* Simple link */}
+      
       <a href="#!">Forgot password?</a>
     </div>
   </div>
   {/* Submit button */}
-  <button type="button" className="btn btn-primary btn-block mb-4">
+  <button type="button" className="btn btn-primary btn-block mb-4" onClick={(e)=> signin(e)}>
     Sign in
   </button>
 </form>

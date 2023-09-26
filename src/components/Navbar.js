@@ -2,9 +2,11 @@ import React from 'react';
 
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Link } from 'react-router-dom';
+import './image.png'
 
 
-const Navbari = () => {
+const Navbari = (props) => {
+  const mode = props.mode;
   return (
       <nav
       className="navbar navbar-expand-lg bg-body-secondary"
@@ -82,12 +84,23 @@ const Navbari = () => {
             </form>
           </div>
           <form className="d-flex justify-content-end ">
-            <Link to="/sign-up"><button className="btn btn-outline-secondary me-2" type="submit">
+
+            {(mode == "signup")?<Link to = "/sign-in"><button className="btn btn-outline-secondary" type="submit">
+              Sign In
+            </button></Link>:null}
+            {(mode == "signin")?<Link to="/sign-up"><button className="btn btn-outline-secondary" type="submit">
               Sign Up
-            </button></Link>
-            <Link to = "/sign-in"><button className="btn btn-outline-secondary" type="submit">
+            </button></Link>:null}
+            {(mode == "home")?
+            <div>
+              <Link to = "/sign-in"><button className="btn btn-outline-secondary me-2" type="submit">
               Sign In
             </button></Link>
+            <Link to="/sign-up"><button className="btn btn-outline-secondary" type="submit">
+            Sign Up
+          </button></Link>
+          </div>
+          :null}
           </form>
         </div>
       </div>

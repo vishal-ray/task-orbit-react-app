@@ -4,7 +4,9 @@ import { BrowserRouter,Route, Routes } from 'react-router-dom';
 import Home from './routers/Home';
 import SignUpRouter from './routers/SignUpRouter';
 import SignInRouter from './routers/SignInRouter';
-// import JobSection from './components/JobSection';
+import TestRouter from './routers/TestRouter';
+
+
 
 
 function App() {
@@ -16,6 +18,7 @@ function App() {
             <Route path='/' element={<Home/>}/>
             <Route path='/sign-up' element={<SignUpRouter/>}/>
             <Route path='/sign-in' element={<SignInRouter/>}/>
+            <Route path='/test' element={<TestRouter/>}/>
         </Routes>
 
         </BrowserRouter>

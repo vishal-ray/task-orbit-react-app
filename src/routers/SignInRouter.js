@@ -9,7 +9,7 @@ const SignInRouter = () => {
 
     return(
         <>
-        <Navbari></Navbari>
+        <Navbari mode = "signin"></Navbari>
         <SignIn></SignIn>
         <Footer></Footer>
         </>       
