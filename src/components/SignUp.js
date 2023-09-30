@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import UserService from '../serivces/UserService';
+import AuthService from '../serivces/AuthService';
 import Swal from 'sweetalert2';
 
 const SignUp = () => {
@@ -13,7 +13,7 @@ const SignUp = () => {
 
   const saveUser = (e) =>{
     const user = {firstName,lastName,emailid,password}
-    UserService.createUser(user).then((response)=>
+    AuthService.createUser(user).then((response)=>
     {
       console.log("User Data Sent")
       console.log(response.data)

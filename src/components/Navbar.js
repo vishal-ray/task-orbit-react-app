@@ -9,12 +9,12 @@ const Navbari = (props) => {
   const mode = props.mode;
   return (
       <nav
-      className="navbar navbar-expand-lg bg-body-secondary"
+      className="navbar navbar-expand-lg bg-body-tertiary fixed-top" style={{fontFamily: '"Nunito", sans-serif'}}
     >
       <div className="container-fluid">
-      <Link to="/"><a className="navbar-brand" href="#">
+      <Link to="/" className="navbar-brand">
           Task Orbit
-        </a></Link>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -28,10 +28,10 @@ const Navbari = (props) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link to="/"><a className="nav-link active" aria-current="page" href="#">
+            <li className="nav-item" style={{ textDecoration: "none", borderBottomStyle: "none" }} >
+              <Link to="/" className="nav-link active" aria-current="page">
                 Home
-              </a></Link>
+              </Link>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#">
@@ -70,7 +70,7 @@ const Navbari = (props) => {
               </ul>
             </li>
           </ul>
-          <div className="container-fluid" style={{ width: "fit-content" }}>
+          <div className="container-fluid" style={{ width: "100vh" }}>
             <form className="d-flex justify-content-center" role="search">
               <input
                 className="form-control me-2"
@@ -78,9 +78,6 @@ const Navbari = (props) => {
                 placeholder="Search"
                 aria-label="Search"
               />
-              <button className="btn btn-outline-secondary" type="submit">
-                Search
-              </button>
             </form>
           </div>
           <form className="d-flex justify-content-end ">

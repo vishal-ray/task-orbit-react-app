@@ -1,83 +1,41 @@
-import axios from 'axios';
-import React from 'react';
-
-// const client = axios.create({
-//     baseURL: "http://127.0.0.1:5000/user" 
-//   });
+import React,{useState} from "react";
+import axios from "axios";
 
 function Test()
 {
-    // debugger;
+    // const[res,setRes]=useState(null)
+    let res = null;
     const token = window.sessionStorage.getItem("Authorization"); 
-    const data = {token}
-    console.log(token)
-    // axios.defaults.headers.common['Authorization'] = token;
-    // axios.create
-    axios.get("http://127.0.0.1:5000/user/test", { headers: { Authorization: token,Origin: "http://localhost:3000"
-} })
-    .then(response =>{
-        console.log("Success")
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Access-Control-Allow-Origin': "http://localhost:3000/",
+        'Access-Control-Allow-Credentials': "true"
+      },
+      withCredentials: true
+    };
+
+    axios.get("http://127.0.0.1:8080/user/test", config)
+    .then(response=>{
+      return response
     })
-    .catch(error=>{
-        console.log("error")
-    })
-    // const res = client.get("/test").then(response =>{
-    //     console.log("Success")
-    // }).catch(error=>{
-    //     console.log(error)
-    // })
+
+    axios.interceptors.response.use(function (response) {
+      console.log('Axios response:', response.data);
+      // res = response.data;
+      return response;
+    }, function (error) {
+      console.log('Axios error:', error.data);
+      return Promise.reject(error);
+    });
     
+      // console.log(res.data)
 
-// const url = 'http://127.0.0.1:5000/user/test';
+      if (!res) {
+        return <div>Loading...</div>;
+      }
+    
+      return <div><h1>a</h1></div>;
+    };
 
-// // Set the token obtained after authentication
-
-
-// // Define headers
-// const headers = {
-//   'Authorization': `Bearer ${token}`,
-//   'Content-Type': 'application/json',
-// };
-
-// // Make the GET request
-// axios.get(url, { headers })
-//   .then(response => {
-//     // Handle the response from the API
-//     console.log(response.data);
-//   })
-//   .catch(error => {
-//     // Handle any errors
-//     console.error(error);
-//   });
-
-    return <div>{res}</div>
-}   
-
-
-
-
-// import React, { useState, useEffect } from 'react';
-// import axios from "axios";
-
-// function Test() {
-//     const [response, setResponse] = useState(null);
-
-//     useEffect(() => {
-//         const token = 'Bearer '.concat(window.sessionStorage.getItem("Authorization"));
-//         console.log(token);
-
-//         axios.get("http://127.0.0.1:5000/user/test", { headers: { Authorization: token } })
-//             .then(response => {
-//                 console.log("Success");
-//                 setResponse(response.data); // Update the state with the response data
-//             })
-//             .catch(error => {
-//                 console.log(error);
-//                 setResponse(error.response.data); // Update the state with the error response data
-//             });
-//     }, []);
-
-//     return <div>{response}</div>
-// }
-
-export default Test;
+  export default Test;

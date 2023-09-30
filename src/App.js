@@ -5,6 +5,7 @@ import Home from './routers/Home';
 import SignUpRouter from './routers/SignUpRouter';
 import SignInRouter from './routers/SignInRouter';
 import TestRouter from './routers/TestRouter';
+import Demo from './demo/Demo';
 
 
 
@@ -18,7 +19,8 @@ function App() {
             <Route path='/' element={<Home/>}/>
             <Route path='/sign-up' element={<SignUpRouter/>}/>
             <Route path='/sign-in' element={<SignInRouter/>}/>
-            <Route path='/test' element={<TestRouter/>}/>
+            <Route path='/user/test' element={<TestRouter/>}/>
+            <Route path='/demo' element={<Demo/>}/>
         </Routes>
 
         </BrowserRouter>

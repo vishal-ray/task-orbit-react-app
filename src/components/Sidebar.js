@@ -3,11 +3,11 @@ import JobSection from './JobSection';
 
 const Sidebar = () => {
   return (
-    <div className="container-fluid" style= {{backgroundColor: "#d1d9e3"}}>
+    <div className="container-fluid" style= {{backgroundColor: "#d1d9e3", fontFamily: '"Nunito", sans-serif'}}>
       <div className="row">
         <nav
           className="col-md-3 col-lg-2 d-md-block sidebar"
-          style={{backgroundColor: "#d1d9e3", borderRight:"0.001px solid gray 50%"}}
+          style={{backgroundColor: "#d1d9e3", borderRight:"1px solid gray"}}
         >
           <a
             className="navbar-brand d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"

@@ -1,0 +1,48 @@
+My Setting::::_----
+Accept:
+application/json, text/plain, */*
+Authorization:
+Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2cmF5dmlzaGFsQGdtYWlsLmNvbSIsImlhdCI6MTY5NTgxNTM2OSwiZXhwIjoxNjk1ODMzMzY5fQ.VqBiOradwq4TbAGeaI0Gu4pd4G56oRVoFJxzdcykznfkKFtCRAJc9W1L3G6bKEIiASALto5IcP_UwdALSsO9Kg
+Dnt:
+1
+Referer:
+http://localhost:3000/
+Sec-Ch-Ua:
+"Chromium";v="116", "Not)A;Brand";v="24", "Google Chrome";v="116"
+Sec-Ch-Ua-Mobile:
+?0
+Sec-Ch-Ua-Platform:
+"Linux"
+User-Agent:
+Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+
+
+browser-Setting::::
+
+
+Accept:
+*/*
+Accept-Encoding:
+gzip, deflate, br
+Accept-Language:
+en-US,en;q=0.9,hi;q=0.8
+Access-Control-Request-Headers:
+authorization
+Access-Control-Request-Method:
+GET
+Connection:
+keep-alive
+Host:
+127.0.0.1:8080
+Origin:
+http://localhost:3000
+Referer:
+http://localhost:3000/
+Sec-Fetch-Dest:
+empty
+Sec-Fetch-Mode:
+cors
+Sec-Fetch-Site:
+cross-site
+User-Agent:
+Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36

@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import UserService from '../serivces/UserService';
+import AuthService from '../serivces/AuthService';
 
 
 const SignIn = () => {
@@ -11,7 +11,7 @@ const SignIn = () => {
 
   const signin = (e) =>{
     const user = {emailId,password}
-    UserService.signInUser(user).then((response) =>{
+    AuthService.signInUser(user).then((response) =>{
       console.log(response.data)
       window.sessionStorage.setItem('Authorization',response.data.jwtToken)
       
