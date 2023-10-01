@@ -25,7 +25,7 @@ const SignUp = () => {
   }
 
   return(
-        <div className='container-fluid' style={{ width: 700, marginTop: 30 }}>
+        <div className='container-fluid' style={{ width: 700, marginTop: 75, marginBottom:150 }}>
 
 <form>
 <div className="form-outline mb-4 pt-100">
@@ -33,28 +33,23 @@ const SignUp = () => {
       value={firstName}
       onChange={(e)=>setFirstName(e.target.value)}
       required />
-    <label className="form-label" htmlFor="firstName">
-      First Name
-    </label>
+    
   </div>
   <div className="form-outline mb-4 pt-100">
     <input type="text" id="lastName" className="form-control "placeholder="Last Name"
       value={lastName}
       onChange={(e)=>setLastName(e.target.value)}
       required />
-    <label className="form-label" htmlFor="lastName">
-      Last Name
-    </label>
+    
   </div>
+  
   {/* EmailID input */}
   <div className="form-outline mb-4 pt-100">
-    <input type="emailid" id="form2Example1" className="form-control" placeholder="EmailID ID" 
+    <input type="emailid" id="form2Example1" className="form-control" placeholder="hello@gmail.com" 
       value={emailid}
       onChange={(e)=>setEmailID(e.target.value)}
       required/>
-    <label className="form-label" htmlFor="form2Example1">
-      EmailID address
-    </label>
+    
   </div>
   {/* Password input */}
   <div className="form-outline mb-4">
@@ -62,18 +57,15 @@ const SignUp = () => {
       value={password}
       onChange={(e)=>setPassword(e.target.value)}
       required />
-    <label className="form-label" htmlFor="form2Example2">
-      Password
-    </label>
+    
   </div>
   {/* 2 column grid layout for inline styling */}
-  <div className="row mb-4">
-    <div className="col d-flex justify-content-center">
+    <div className=" row mb-4 d-grid gap-2 col d-flex justify-content-center">
       <button type="button" className="btn btn-primary btn-block mb-4" onClick={(e) => saveUser(e)}>
     Sign up
      </button>
       </div>
-  </div>  
+
 </form>
 </div>
     )

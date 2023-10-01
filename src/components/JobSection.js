@@ -1,5 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import JobService from '../serivces/JobService';
+import Sidebar from './Sidebar';
 
 function JobSection() {
 
@@ -56,22 +57,15 @@ function JobSection() {
   // ];
 
   return (
+    <>
+    
     <div style={{backgroundColor: "White", marginTop:75, marginBottom:150}}>
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-        crossOrigin="anonymous"
-      />
-      <link
-  href="https://fonts.googleapis.com/css?family=Nunito&display=swap"
-  rel="stylesheet"
-/>
+    {/* <Sidebar/> */}
 {/* style={{fontFamily: '"Nunito", sans-serif'}} */}
-      <h3 style={{textAlign:"center" , fontFamily: '"Nunito", sans-serif'}}><b>Latest Jobs</b></h3>
+      <h3 style={{textAlign:"center" , fontFamily: '"Nunito", sans-serif', color:"#2A679C"}}><b>Latest Jobs</b></h3>
      <div className="container" style={{padding:"0", backgroundColor: "White",  fontFamily: '"Nunito", sans-serif'}}>
       {jobs.map((job) => (
-        <div className="card" style={{backgroundColor: "White", borderBottom: "1px solid #000", borderLeft: 0, borderRight:0, borderTop:0, borderRadius:0, borderWidth:"75%"}}key={job.id}>
+        <div className="card" style={{backgroundColor: "White", border:0, color:"#2A679C"}}key={job.id}>
           <div className="card-body d-flex justify-content-between align-items-center">
             <div>
               <h5 className="card-title fw-bold">{job.institute}</h5>
@@ -85,11 +79,13 @@ function JobSection() {
                 </a>
               </p>
             </div>
-            <button className="btn btn-secondary">Apply Here</button>
+            <button className="btn btn-primary" style={{backgroundColor:"#2A679C"}}>Apply Here</button>
           </div>
         </div>
       ))}
     </div>
+
+    {/* Pagination */}
     <nav aria-label="Page navigation example" style={{marginTop:15}}>
   <ul className="pagination justify-content-center">
     <li className="page-item">
@@ -121,7 +117,7 @@ function JobSection() {
 </nav>
 
     </div>
-    
+    </>
   );
 };
 export default JobSection;

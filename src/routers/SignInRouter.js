@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-import Navbari from '../components/Navbar'
+import Navbari from '../components/Header_Logged_Out_Component'
 import Footer from '../components/Footer';
 import SignIn from '../components/SignIn';
 

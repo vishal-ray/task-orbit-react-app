@@ -8,11 +8,11 @@ const Footer = () => {
   rel="stylesheet"
 />
 {/* style={{fontFamily: '"Nunito", sans-serif'}} */}
-      <div className="container-fluid bg-body-tertiary fixed-bottom" style={{backgroundColor:"#e9ecef", fontFamily: '"Nunito", sans-serif'}}>
-        <footer className="pt-5 container">
+      <div className="container-fluid fixed-bottom p-2 text-white taskorbitbg" style={{fontFamily: '"Nunito", sans-serif', backgroundColor:"#2A679C"}}>
+        <footer className="container">
           
-          <div className="d-flex flex-column flex-sm-row justify-content-between pt-4 mt-4 border-top">
-            <p>© 2023 Company, Inc. All rights reserved.</p>
+          <div className="d-flex flex-column flex-sm-row justify-content-center pt-4 ">
+            <p>© 2023 TaskOrbit, Inc. All rights reserved.</p>
             <ul className="list-unstyled d-flex">
               <li className="ms-3">
                 <a className="link-body-emphasis" href="#">

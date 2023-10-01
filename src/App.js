@@ -6,6 +6,7 @@ import SignUpRouter from './routers/SignUpRouter';
 import SignInRouter from './routers/SignInRouter';
 import TestRouter from './routers/TestRouter';
 import Demo from './demo/Demo';
+import SignOutRouter from './routers/SignOutRouter';
 
 
 
@@ -21,6 +22,7 @@ function App() {
             <Route path='/sign-in' element={<SignInRouter/>}/>
             <Route path='/user/test' element={<TestRouter/>}/>
             <Route path='/demo' element={<Demo/>}/>
+            {/* <Route path='/sign-out' element={<SignOutRouter/>}/> */}
         </Routes>
 
         </BrowserRouter>

@@ -14,13 +14,13 @@ const SignIn = () => {
     AuthService.signInUser(user).then((response) =>{
       console.log(response.data)
       window.sessionStorage.setItem('Authorization',response.data.jwtToken)
-      
+      navigate("/")
     }).catch(error =>{
       console.log(error)
     })
   }
     return(
-        <div className='container-fluid' style={{ width: 700, marginTop: 30 }}>
+        <div className='container-fluid' style={{ width: 700, marginTop: 100 }}>
 
 <form>
   {/* Email input */}
@@ -29,9 +29,7 @@ const SignIn = () => {
     value={emailId}
     onChange={(e)=>setEmailID(e.target.value)}
     required/>
-    <label className="form-label" htmlFor="form2Example1">
-      Email address
-    </label>
+    
   </div>
   {/* Password input */}
   <div className="form-outline mb-4">
@@ -63,6 +61,11 @@ const SignIn = () => {
 </div>
     )
 
+    // return(
+    //   <>
+      
+    //   </>
+    // )
 }
 
 
