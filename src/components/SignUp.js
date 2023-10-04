@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import AuthService from '../serivces/AuthService';
 import Swal from 'sweetalert2';
+import {websiteThemeColor} from '/home/vishal_ray/task-orbit-react-app/src/GlobalVariables.js'
 
 const SignUp = () => {
 
@@ -25,49 +26,74 @@ const SignUp = () => {
   }
 
   return(
-        <div className='container-fluid' style={{ width: 700, marginTop: 75, marginBottom:150 }}>
+    <>
+      
+<div className="container mt-5" style={{marginBottom:150}}>
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <div className="card">
+            <div className="card-body">
+              <h2 className="card-title text-center mb-4">Sign Up</h2>
+              <form>
 
-<form>
-<div className="form-outline mb-4 pt-100">
-    <input type="text" id="firstName" className="form-control" placeholder="First Name" 
-      value={firstName}
-      onChange={(e)=>setFirstName(e.target.value)}
-      required />
-    
-  </div>
-  <div className="form-outline mb-4 pt-100">
-    <input type="text" id="lastName" className="form-control "placeholder="Last Name"
-      value={lastName}
-      onChange={(e)=>setLastName(e.target.value)}
-      required />
-    
-  </div>
-  
-  {/* EmailID input */}
-  <div className="form-outline mb-4 pt-100">
-    <input type="emailid" id="form2Example1" className="form-control" placeholder="hello@gmail.com" 
-      value={emailid}
-      onChange={(e)=>setEmailID(e.target.value)}
-      required/>
-    
-  </div>
-  {/* Password input */}
-  <div className="form-outline mb-4">
-    <input type="password" id="form2Example2" className="form-control" placeholder="Password" 
-      value={password}
-      onChange={(e)=>setPassword(e.target.value)}
-      required />
-    
-  </div>
-  {/* 2 column grid layout for inline styling */}
-    <div className=" row mb-4 d-grid gap-2 col d-flex justify-content-center">
-      <button type="button" className="btn btn-primary btn-block mb-4" onClick={(e) => saveUser(e)}>
-    Sign up
-     </button>
+                <div className="mb-3">
+                  <input
+                   type="text"
+                   id="firstName" 
+                   className="form-control" 
+                   placeholder="First Name" 
+                   value={firstName} 
+                   onChange={(e)=>setFirstName(e.target.value)}
+                   required />
+                </div>
+
+                <div className="mb-3">                
+                  <input
+                   type="text"
+                   id="lastName" 
+                   className="form-control" 
+                   placeholder="Last Name" 
+                   value={lastName} 
+                   onChange={(e)=>setLastName(e.target.value)}
+                   required />
+                </div>
+                
+                <div className="mb-3">                 
+                  <input 
+                   type="emailid" 
+                   id="email" 
+                   className="form-control" 
+                   placeholder="hello@gmail.com" 
+                   name="email"
+                   value={emailid}
+                   onChange={(e)=>setEmailID(e.target.value)}
+                   required/>
+                </div>
+
+                <div className="mb-3">                                  
+                  <input
+                   type="password" 
+                   id="password" 
+                   className="form-control" 
+                   placeholder="Password"   
+                   value={password}      
+                   onChange={(e)=>setPassword(e.target.value)}
+                   required />
+                </div>
+
+                <div className="d-grid gap-2">
+                  <button type="button" className="btn btn-primary" onClick={(e) => saveUser(e)}>
+                    Sign Up
+                  </button>
+                </div>
+ 
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
-
-</form>
-</div>
+    </div> 
+    </>
     )
 
 }

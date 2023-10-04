@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {useNavigate } from 'react-router';
 import Sidebar from './Sidebar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHomeLg } from '@fortawesome/free-solid-svg-icons';
 
   const Header_Logged_In_Component = (props) => {
   let mode = props.mode;
@@ -15,11 +17,11 @@ import Sidebar from './Sidebar';
   
   return (
     <> 
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg taskorbitbg" style={{fontFamily: '"Nunito", sans-serif'}}>
       <div className="container-fluid d-flex justify-content-between align-items-center">
         <button
           type="button"
-          className="btn btn-outline-primary me-2"
+          className="btn btn-outline-light me-2"
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasSidebar"
         >
@@ -27,22 +29,23 @@ import Sidebar from './Sidebar';
         </button>
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link to="/" className="nav-link active" aria-current="page">
-                Home
+              <Link to="/" className="nav-link active" aria-current="page" style={{color: 'white'}}>
+              <FontAwesomeIcon icon={faHomeLg} size="lg" style={{color: "#ffffff"}} />
               </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link
+              <a className="nav-link" href="#" style={{color: 'white'}}>
+                My Jobs
               </a>
             </li>
-            <li className="nav-item dropdown">
+            {/* <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle"
                 href="#"
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
+                style={{color: 'white'}}
               >
                 Dropdown
               </a>
@@ -66,17 +69,18 @@ import Sidebar from './Sidebar';
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> */}
           </ul>
         <input
           type="search"
-          className="form-control me-2"
-          style={{ width: '300px' }}
+          className="form-control me-2 position-absolute top-5 start-50 translate-middle-x"
+          style={{width: "30%"}}
           placeholder="Search"
           aria-label="Search"
+          
         />
         <form className="d-flex justify-content-end ">
-        <button className="btn btn-outline-secondary" type="submit" onClick={(e)=>signout(e)}>
+        <button className="btn btn-outline-light" type="submit" onClick={(e)=>signout(e)}>
           Sign Out
           </button>
         </form>

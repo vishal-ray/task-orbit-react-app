@@ -1,4 +1,6 @@
 import React from "react"
+import {websiteThemeColor} from '/home/vishal_ray/task-orbit-react-app/src/GlobalVariables.js'
+import "../css/style.css"
 
 const Footer = () => {
     return(
@@ -7,8 +9,7 @@ const Footer = () => {
   href="https://fonts.googleapis.com/css?family=Nunito&display=swap"
   rel="stylesheet"
 />
-{/* style={{fontFamily: '"Nunito", sans-serif'}} */}
-      <div className="container-fluid fixed-bottom p-2 text-white taskorbitbg" style={{fontFamily: '"Nunito", sans-serif', backgroundColor:"#2A679C"}}>
+    <div className="container-fluid  p-2 text-white taskorbitbg" style={{fontFamily: '"Nunito", sans-serif'}}>
         <footer className="container">
           
           <div className="d-flex flex-column flex-sm-row justify-content-center pt-4 ">

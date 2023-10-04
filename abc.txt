@@ -46,3 +46,12 @@ Sec-Fetch-Site:
 cross-site
 User-Agent:
 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
+
+
+
+
+Access to XMLHttpRequest at 'http://127.0.0.1:8080/user/test' from origin 'http://localhost:3000' 
+has been blocked by CORS policy: Response to preflight request doesn't pass access control check: 
+The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*'
+ when the request's credentials mode is 'include'. The credentials mode of requests initiated by the 
+ XMLHttpRequest is controlled by the withCredentials attribute.

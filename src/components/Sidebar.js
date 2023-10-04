@@ -1,17 +1,17 @@
 import React from 'react';
 import JobSection from './JobSection';
+import {websiteThemeColor} from '/home/vishal_ray/task-orbit-react-app/src/GlobalVariables.js'
 
 const Sidebar = () => {
   return (
     <><div
-    className="offcanvas offcanvas-start"
+    className="offcanvas offcanvas-start taskorbitbg"
     style={{
       position: "fixed",
       top: "0",
       left: "0",
       width: "250px",
       height: "100vh",
-      backgroundColor: "white",
       overflowY: "auto",
       // zIndex: 1000,
       borderTopRightRadius:"10px"
@@ -21,21 +21,28 @@ const Sidebar = () => {
     <div className="offcanvas-header">
       <button
         type="button"
-        class="btn-close text-reset"
+        className="btn-close text-reset"
         data-bs-dismiss="offcanvas"
         aria-label="Close"
       ></button>
     </div>
-    <div class="offcanvas-body">
-      <nav class="nav flex-column">
-        <a class="nav-link active" href="#">
-          Home
+    <div className="offcanvas-body" style={{backgroundColor:`${websiteThemeColor}`}}>
+      <nav className="nav flex-column" style={{backgroundColor:`${websiteThemeColor}`}}>
+        <h6 style={{color:"white"}}>Major Job Sectors</h6>
+        <a className="nav-link active" href="#" style={{color:"white"}}>
+          Railways
         </a>
-        <a class="nav-link" href="#">
-          About
+        <a className="nav-link" href="#" style={{color:"white"}}>
+          Teaching
         </a>
-        <a class="nav-link" href="#">
-          Contact
+        <a className="nav-link" href="#" style={{color:"white"}}>
+          Bank/PO
+        </a>
+        <a className="nav-link" href="#" style={{color:"white"}}>
+          Defence
+        </a>
+        <a className="nav-link" href="#" style={{color:"white"}}>
+          SSC
         </a>
       </nav>
     </div>

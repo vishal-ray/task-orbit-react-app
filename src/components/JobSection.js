@@ -1,10 +1,18 @@
 import React,{useEffect,useState} from 'react'
 import JobService from '../serivces/JobService';
 import Sidebar from './Sidebar';
+import {websiteThemeColor} from '/home/vishal_ray/task-orbit-react-app/src/GlobalVariables.js'
+import Filters from './Filters';
 
 function JobSection() {
 
   const [jobs,setJobs] = useState([])
+  const [filters, setFilters] = useState({
+    institute: '',
+    title: '',
+    state: '',
+    department: '',
+  });
 
   useEffect(() =>{
     getAllJobs();
@@ -20,52 +28,24 @@ function JobSection() {
     });
   }
 
-  // const jobs = [
-  //   {
-  //     title: "Professor",
-  //     institute: "Delhi University",
-  //     payscale: "50000/month",
-  //     state: "Delhi",
-  //     department: "English",
-  //     lastDateToApply : "05/11/2023",
-  //     vacancyNumber : 12,
-  //     applyLink: "https://www.google.com/",
-  //     advertisementLink: "xyz.com"
-  //   },
-  //   {
-  //       title: "Professor",
-  //       institute: "Delhi University",
-  //       payscale: "50000/month",
-  //       state: "Delhi",
-  //       department: "English",
-  //       lastDateToApply : "05/11/2023",
-  //       vacancyNumber : 12,
-  //       applyLink: "https://www.google.com/",
-  //       advertisementLink: "xyz.com"
-  //   },
-  //   {
-  //       title: "Professor",
-  //       institute: "Delhi University",
-  //       payscale: "50000/month",
-  //       state: "Delhi",
-  //       department: "English",
-  //       lastDateToApply : "05/11/2023",
-  //       vacancyNumber : 12,
-  //       applyLink: "https://www.google.com/",
-  //       advertisementLink: "xyz.com"
-  //   },
-  // ];
+  const handleFilterChange = (filtersState) => {
+    setFilters(filtersState);
+  };
 
-  return (
+    return (
     <>
-    
-    <div style={{backgroundColor: "White", marginTop:75, marginBottom:150}}>
-    {/* <Sidebar/> */}
-{/* style={{fontFamily: '"Nunito", sans-serif'}} */}
-      <h3 style={{textAlign:"center" , fontFamily: '"Nunito", sans-serif', color:"#2A679C"}}><b>Latest Jobs</b></h3>
+    <Filters filters={filters} onFilterChange={handleFilterChange} />
+
+    <div style={{backgroundColor: "White", marginTop:20}}>
+         
      <div className="container" style={{padding:"0", backgroundColor: "White",  fontFamily: '"Nunito", sans-serif'}}>
+     <div className="card" style={{backgroundColor: "White", border:0, color:`${websiteThemeColor}`}}>
+     <div className="card-body d-flex justify-content-between align-items-center">
+        <h3 className="taskorbit-text"style={{fontFamily: '"Nunito", sans-serif'}}><b>Latest Jobs</b></h3>
+        </div>
+     </div>
       {jobs.map((job) => (
-        <div className="card" style={{backgroundColor: "White", border:0, color:"#2A679C"}}key={job.id}>
+        <div className="card taskorbit-text" style={{backgroundColor: "White", border:0}}key={job.id}>
           <div className="card-body d-flex justify-content-between align-items-center">
             <div>
               <h5 className="card-title fw-bold">{job.institute}</h5>
@@ -79,7 +59,8 @@ function JobSection() {
                 </a>
               </p>
             </div>
-            <button className="btn btn-primary" style={{backgroundColor:"#2A679C"}}>Apply Here</button>
+            {/* <button className="btn btn-primary taskorbit-text" href={job.applyLink}>Asadasd</button> */}
+            <a className="btn btn-primary" href={job.applyLink} target='_blank'>Apply Here</a>
           </div>
         </div>
       ))}

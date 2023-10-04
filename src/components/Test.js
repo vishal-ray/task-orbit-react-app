@@ -8,11 +8,8 @@ function Test()
     const token = window.sessionStorage.getItem("Authorization"); 
     const config = {
       headers: {
-        'Authorization': `Bearer ${token}`,
-        'Access-Control-Allow-Origin': "http://localhost:3000/",
-        'Access-Control-Allow-Credentials': "true"
-      },
-      withCredentials: true
+        'Authorization': `Bearer ${token}`
+      }
     };
 
     axios.get("http://127.0.0.1:8080/user/test", config)

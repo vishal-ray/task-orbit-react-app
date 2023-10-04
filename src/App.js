@@ -1,4 +1,4 @@
-import React, { StrictMode } from 'react';
+import React from 'react';
 import { BrowserRouter,Route, Routes } from 'react-router-dom';
 
 import Home from './routers/Home';
@@ -7,6 +7,8 @@ import SignInRouter from './routers/SignInRouter';
 import TestRouter from './routers/TestRouter';
 import Demo from './demo/Demo';
 import SignOutRouter from './routers/SignOutRouter';
+import UserProfileRouter from './routers/UserProfileRouter';
+import JobDescriptionRouter from './routers/JobDescriptionRouter';
 
 
 
@@ -22,6 +24,9 @@ function App() {
             <Route path='/sign-in' element={<SignInRouter/>}/>
             <Route path='/user/test' element={<TestRouter/>}/>
             <Route path='/demo' element={<Demo/>}/>
+            <Route path='/profile' element={<UserProfileRouter/>}/>
+            <Route path='/job-description' element={<JobDescriptionRouter/>}/>
+            
             {/* <Route path='/sign-out' element={<SignOutRouter/>}/> */}
         </Routes>
 
