@@ -6,6 +6,10 @@ class JobService{
     getAllJobs(){
         return axios.get(BASE_URL);
     }
+    getJobById(id)
+    {
+        return axios.get(BASE_URL + `/${id}`);
+    }
 }
 
 export default new JobService();

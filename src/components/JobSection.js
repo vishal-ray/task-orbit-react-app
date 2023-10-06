@@ -1,104 +1,178 @@
-import React,{useEffect,useState} from 'react'
-import JobService from '../serivces/JobService';
-import Sidebar from './Sidebar';
-import {websiteThemeColor} from '/home/vishal_ray/task-orbit-react-app/src/GlobalVariables.js'
-import Filters from './Filters';
+import React, { useEffect, useState } from "react";
+import JobService from "../serivces/JobService";
+import Filters, { FilterButton } from "./Filters";
+import { Link } from "react-router-dom";
+import ReactPaginate from "react-paginate";
+import { Pagination } from "react-bootstrap";
 
 function JobSection() {
+  const [jobs, setJobs] = useState([]);
 
-  const [jobs,setJobs] = useState([])
-  const [filters, setFilters] = useState({
-    institute: '',
-    title: '',
-    state: '',
-    department: '',
-  });
+  const [pageNumber, setPageNumber] = useState(0);
+  const jobsPerPage = 10; // Number of jobs per page
 
-  useEffect(() =>{
+  useEffect(() => {
     getAllJobs();
-  },[])
-
+  }, [pageNumber]);
 
   const getAllJobs = () => {
-    JobService.getAllJobs().then((response) =>{
-      setJobs(response.data)
-      console.log(response.data)
-    }).catch(error =>{
-      console.log(error);
-    });
-  }
-
-  const handleFilterChange = (filtersState) => {
-    setFilters(filtersState);
+    JobService.getAllJobs()
+      .then((response) => {
+        setJobs(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
-    return (
+  const pageCount = Math.ceil(jobs.length / jobsPerPage);
+  const displayedJobs = jobs.slice(
+    pageNumber * jobsPerPage,
+    (pageNumber + 1) * jobsPerPage
+  );
+
+  const handlePageClick = (selectedPage) => {
+    setPageNumber(selectedPage);
+  };
+
+  const [filtersOpen, setFiltersOpen] = React.useState(false);
+
+  const handleOpenFilters = () => {
+    setFiltersOpen(true);
+  };
+
+  return (
     <>
-    <Filters filters={filters} onFilterChange={handleFilterChange} />
-
-    <div style={{backgroundColor: "White", marginTop:20}}>
-         
-     <div className="container" style={{padding:"0", backgroundColor: "White",  fontFamily: '"Nunito", sans-serif'}}>
-     <div className="card" style={{backgroundColor: "White", border:0, color:`${websiteThemeColor}`}}>
-     <div className="card-body d-flex justify-content-between align-items-center">
-        <h3 className="taskorbit-text"style={{fontFamily: '"Nunito", sans-serif'}}><b>Latest Jobs</b></h3>
+      <div className="d-flex justify-content-between align-items-center container">
+        <div className="col-sm-9">
+          <input
+            type="search"
+            className="form-control mt-2 mb-2 me-2"
+            style={{
+              width: "98%",
+              backgroundColor: "#ffffff",
+              color: "#333333",
+            }}
+            placeholder="Search"
+            aria-label="Search"
+          />
         </div>
-     </div>
-      {jobs.map((job) => (
-        <div className="card taskorbit-text" style={{backgroundColor: "White", border:0}}key={job.id}>
-          <div className="card-body d-flex justify-content-between align-items-center">
-            <div>
-              <h5 className="card-title fw-bold">{job.institute}</h5>
-              <p className="card-text">
-                <b>{job.title} | Pay: {job.payscale} | State: {job.state} | Department: {job.department} | Vacancy: {job.vacancyNumber}</b>
-              </p>
-              <p className="card-text">
-                Last Date: {job.lastDateToApply}{'        '}
-                <a href={job.advertisementLink} target="_blank" rel="noopener noreferrer">
-                  {" "}    Notification Link
-                </a>
-              </p>
+        <div className="col-sm-3">
+          <FilterButton />
+          <Filters />
+        </div>
+      </div>
+
+      <div style={{ backgroundColor: "#ffffff", marginTop: 20 }}>
+        <div
+          className="container"
+          style={{
+            padding: "0",
+            backgroundColor: "#ffffff",
+            fontFamily: "Arial, sans-serif",
+          }}
+        >
+          <div
+            className="card"
+            style={{
+              backgroundColor: "#ffffff",
+              border: "none",
+              color: "#007BFF",
+            }}
+          >
+            <div className="card-body d-flex justify-content-between align-items-center">
+              <h3
+                className="taskorbit-text"
+                style={{ fontFamily: "Arial, sans-serif", color: "#333333" }}
+              >
+                <b>Latest Jobs</b>
+              </h3>
             </div>
-            {/* <button className="btn btn-primary taskorbit-text" href={job.applyLink}>Asadasd</button> */}
-            <a className="btn btn-primary" href={job.applyLink} target='_blank'>Apply Here</a>
           </div>
+          {displayedJobs.map((job) => (
+            <div
+              className="card taskorbit-text"
+              style={{ backgroundColor: "#ffffff", border: "none" }}
+              key={job.id}
+            >
+              <div className="card-body d-flex justify-content-between align-items-center">
+                <div>
+                  <h5 className="card-title fw-bold">{job.institute}</h5>
+                  <p className="card-text">
+                    <b>
+                      {job.title} | Pay: {job.payscale} | State: {job.state} |
+                      Department: {job.department} | Vacancy:{" "}
+                      {job.vacancyNumber}
+                    </b>
+                  </p>
+                  <p className="card-text">
+                    Last Date: {job.lastDateToApply}
+                    {"        "}
+                    <a
+                      href={job.advertisementLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: "#007BFF" }}
+                    >
+                      {" "}
+                      Notification Link
+                    </a>
+                  </p>
+                </div>
+                <div>
+                  <Link
+                    className="btn btn-outline-primary me-2"
+                    to={`/job/${job.id}`}
+                    // target="_blank"
+                  >
+                    More Info
+                  </Link>
+                  <a
+                    className="btn btn-primary"
+                    href={job.applyLink}
+                    target="_blank"
+                  >
+                    Apply Here
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
 
-    {/* Pagination */}
-    <nav aria-label="Page navigation example" style={{marginTop:15}}>
-  <ul className="pagination justify-content-center">
-    <li className="page-item">
-      <a className="page-link" href="#" aria-label="Previous">
-        <span aria-hidden="true">«</span>
-      </a>
-    </li>
-    <li className="page-item">
-      <a className="page-link" href="#">
-        1
-      </a>
-    </li>
-    <li className="page-item">
-      <a className="page-link" href="#">
-        2
-      </a>
-    </li>
-    <li className="page-item">
-      <a className="page-link" href="#">
-        3
-      </a>
-    </li>
-    <li className="page-item">
-      <a className="page-link" href="#" aria-label="Next">
-        <span aria-hidden="true">»</span>
-      </a>
-    </li>
-  </ul>
-</nav>
-
-    </div>
+        {/* Pagination */}
+        <div
+          style={{ marginTop: 15, display: "flex", justifyContent: "center" }}
+        >
+          <Pagination>
+            <Pagination.Prev
+              onClick={() => {
+                if (pageNumber > 0) {
+                  handlePageClick(pageNumber - 1);
+                }
+              }}
+            />
+            {Array.from({ length: pageCount }).map((_, index) => (
+              <Pagination.Item
+                key={index}
+                active={index === pageNumber}
+                onClick={() => handlePageClick(index)}
+              >
+                {index + 1}
+              </Pagination.Item>
+            ))}
+            <Pagination.Next
+              onClick={() => {
+                if (pageNumber < pageCount - 1) {
+                  handlePageClick(pageNumber + 1);
+                }
+              }}
+            />
+          </Pagination>
+        </div>
+      </div>
     </>
   );
-};
+}
+
 export default JobSection;

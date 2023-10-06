@@ -1,108 +1,115 @@
-import React from 'react';
-import { Card, Table, ListGroup } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import { Container, Row, Col, Card, ListGroup } from "react-bootstrap";
+import JobService from "../serivces/JobService";
+import { faAlignCenter } from "@fortawesome/free-solid-svg-icons";
 
+const JobDescription = () => {
+  const [job, setJob] = useState([]);
+  const { id } = useParams();
+  console.log(id);
 
-const JobDescription = ({ job }) => {
+  useEffect(() => {
+    getJob(id);
+  }, []);
+
+  const getJob = (id) => {
+    console.log(id);
+    JobService.getJobById(id)
+      .then((response) => {
+        setJob(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
-    <div className="container my-4">
-      <div className="card">
-        <div className="card-header">
-          <h3 className="taskorbit-text"><b>Job Details</b></h3>
-        </div>
-        <div className="card-body">
-          <Table className="table table-striped">
-            <tbody>
-              <tr>
-                <th scope="row" className="taskorbit-text">Institute</th>
-                <td>Institute Name</td>
-              </tr>
-              <tr>
-                <th scope="row" className="taskorbit-text">Job Title</th>
-                <td>Job Title</td>
-              </tr>
-              <tr>
-                <th scope="row" className="taskorbit-text">Pay Scale</th>
-                <td>payscale</td>
-              </tr>
-              <tr>
-                <th scope="row" className="taskorbit-text">State</th>
-                <td>State</td>
-              </tr>
-              <tr>
-                <th scope="row" className="taskorbit-text">Department</th>
-                <td>Department</td>
-              </tr>
-              <tr>
-                <th scope="row" className="taskorbit-text">Vacancy Number</th>
-                <td>Vacancy Number</td>
-              </tr>
-              <tr>
-                <th scope="row" className="taskorbit-text">Last Date to Apply</th>
-                <td>Last Date to Apply</td>
-              </tr>
-              <tr>
-                <th scope="row" className="taskorbit-text">Notification Link</th>
-                <td>
-                  <a href="#" target="_blank" rel="noopener noreferrer">
-                    Notification Link
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row" className="taskorbit-text">Apply Link</th>
-                <td>
-                  <a href="#" target="_blank" rel="noopener noreferrer">
-                    Apply Link
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </Table>
-        </div>
-      </div>
+    <Container className="my-4">
+      <Row>
+        <Col lg={8}>
+          <Card className="shadow-lg">
+            <Card.Body>
+              <h4 className="fw-bold mb-4">Job Details</h4>
+              <ListGroup variant="flush">
+                <JobDetailRow label="Institute" value={job.institute} />
+                <JobDetailRow label="Job Title" value={job.title} />
+                <JobDetailRow label="Pay Scale" value={job.payscale} />
+                <JobDetailRow label="State" value={job.state} />
+                <JobDetailRow label="Department" value={job.department} />
+                <JobDetailRow
+                  label="Vacancy Number"
+                  value={job.vacancyNumber}
+                />
+                <JobDetailRow
+                  label="Last Date to Apply"
+                  value={job.lastDateToApply}
+                />
+                <a
+                  href={job.applyLink}
+                  target="_blank"
+                  className="btn btn-outline-primary mb-2"
+                >
+                  Apply Here
+                </a>
+                <a
+                  href={job.advertisementLink}
+                  target="_blank"
+                  className="btn btn-outline-primary"
+                >
+                  Notification Link
+                </a>
+              </ListGroup>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col lg={4}>
+          <Card className="shadow-lg">
+            <Card.Body>
+              <h4 className="fw-bold text-center mb-4">Minimum Criteria</h4>
+              <ListGroup variant="flush">
+                <JobDetailRow label="Experience" value={job.minCriteria} />
+                <JobDetailRow
+                  label="Educational Qualification"
+                  value={job.minCriteria}
+                />
+                <JobDetailRow label="Age Limit" value={job.minCriteria} />
+                <JobDetailRow label="Nationality" value={job.minCriteria} />
+              </ListGroup>
+            </Card.Body>
+          </Card>
 
-      <div className="card mt-2">
-        <div className="card-header">
-          <h3 className="taskorbit-text"><b>Minimum Criteria</b></h3>
-        </div>
-        <div className="card-body">
-          <ListGroup>
-            <ListGroup.Item >Experience: kvhvbmn</ListGroup.Item>
-            <ListGroup.Item >Educational qualification: mnmnmnn,n,.n.,m,.m,.</ListGroup.Item>
-            <ListGroup.Item >Age limit: vxbxsxbvx</ListGroup.Item>
-            <ListGroup.Item >Nationality: dfdsc</ListGroup.Item>
-          </ListGroup>
-        </div>
-      </div>
+          <AdditionalDetailCard title="Selection Procedure">
+            <p>{job.selectionProcessSteps}</p>
+          </AdditionalDetailCard>
 
-      <div className="card mt-2">
-        <div className="card-header">
-          <h3 className="taskorbit-text"><b>Selection Procedure</b></h3>
-        </div>
-        <div className="card-body">
-          <p>Selection Procedure</p>
-        </div>
-      </div>
+          <AdditionalDetailCard title="Exam Dates">
+            <p>{job.exam_dates}</p>
+          </AdditionalDetailCard>
 
-      <div className="card mt-2">
-        <div className="card-header">
-          <h3 className="taskorbit-text"><b>Exam Dates</b></h3>
-        </div>
-        <div className="card-body">
-          <p>Dates</p>
-        </div>
-      </div>
-
-      <div className="card mt-2">
-        <div className="card-header">
-          <h3 className="taskorbit-text"><b>Syllabus</b></h3>
-        </div>
-        <div className="card-body">
-          <p>Syllabus</p>
-        </div>
-      </div>
-    </div>
+          <AdditionalDetailCard title="Syllabus">
+            <p>{job.syllabus}</p>
+          </AdditionalDetailCard>
+        </Col>
+      </Row>
+    </Container>
   );
 };
+
+const JobDetailRow = ({ label, value }) => (
+  <ListGroup.Item>
+    <h6 className="fw-bold">{label}</h6>
+    <p>{value}</p>
+  </ListGroup.Item>
+);
+
+const AdditionalDetailCard = ({ title, children }) => (
+  <Card className="mt-4 shadow-lg">
+    <Card.Body>
+      <h4 className="fw-bold text-center mb-4">{title}</h4>
+      {children}
+    </Card.Body>
+  </Card>
+);
 
 export default JobDescription;

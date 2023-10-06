@@ -25,7 +25,7 @@ function App() {
             <Route path='/user/test' element={<TestRouter/>}/>
             <Route path='/demo' element={<Demo/>}/>
             <Route path='/profile' element={<UserProfileRouter/>}/>
-            <Route path='/job-description' element={<JobDescriptionRouter/>}/>
+            <Route path='/job/:id' element={<JobDescriptionRouter/>}/>
             
             {/* <Route path='/sign-out' element={<SignOutRouter/>}/> */}
         </Routes>

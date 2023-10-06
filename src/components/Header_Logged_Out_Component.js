@@ -71,13 +71,7 @@ import { faHomeLg } from '@fortawesome/free-solid-svg-icons';
               </ul>
             </li> */}
           </ul>
-        <input
-          type="search"
-          className="form-control me-2 position-absolute top-5 start-50 translate-middle-x"
-          style={{ width: '30%' }}
-          placeholder="Search"
-          aria-label="Search"
-        />
+        
       <form className="d-flex justify-content-end ">
 
         {(mode == "signup")?<Link to = "/sign-in"><button className="btn btn-outline-light" type="submit">

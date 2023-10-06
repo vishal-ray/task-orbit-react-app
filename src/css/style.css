@@ -14,3 +14,14 @@
 .btn-primary{
     background-color: #2A679C !important;
 }
+
+.btn-outline-primary{
+    color:#2A679C !important;
+    border-color:#2A679C !important;
+}
+.btn-outline-primary:hover
+{
+    color:#fff !important;
+    background-color:#2A679C !important;
+    border-color:#2A679C !important;
+}
