@@ -28,11 +28,11 @@ const Sidebar = () => {
     </div>
     <div className="offcanvas-body" style={{backgroundColor:`${websiteThemeColor}`}}>
       <nav className="nav flex-column" style={{backgroundColor:`${websiteThemeColor}`}}>
-        <h6 style={{color:"white"}}>Major Job Sectors</h6>
-        <a className="nav-link active" href="#" style={{color:"white"}}>
-          Railways
-        </a>
-        <a className="nav-link" href="#" style={{color:"white"}}>
+        {/* <h6 style={{color:"white"}}>Major Job Sectors</h6> */}
+        <h6 style={{color:"white"}}><a className="nav-link active" href="/" style={{color:"white"}}>
+          Browse Jobs
+        </a></h6>
+        {/* <a className="nav-link" href="#" style={{color:"white"}}>
           Teaching
         </a>
         <a className="nav-link" href="#" style={{color:"white"}}>
@@ -43,7 +43,7 @@ const Sidebar = () => {
         </a>
         <a className="nav-link" href="#" style={{color:"white"}}>
           SSC
-        </a>
+        </a> */}
       </nav>
     </div>
   </div></>

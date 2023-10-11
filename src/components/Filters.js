@@ -1,8 +1,75 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import JobService from "../serivces/JobService";
 
-export function FilterButton () {
-    return(
-        <button
+const Filters = () => {
+  const navigate = useNavigate();
+  const [selectedFilters, setSelectedFilters] = useState({
+    sector: [],
+    mode_of_working: [],
+    location: "",
+    job_type: [],
+    job_title: "",
+    salary_range: { min: "", max: "" },
+    skills: "",
+  });
+
+  const handleFilterChange = (event) => {
+    const { name, value, type, checked } = event.target;
+
+    setSelectedFilters((prevState) => {
+      const newSelectedFilters = { ...prevState };
+
+      // Handle different input types
+      if (type === "checkbox") {
+        // Initialize the array if it's undefined
+        if (!newSelectedFilters[name]) {
+          newSelectedFilters[name] = [];
+        }
+
+        // Handle checkbox input
+        if (checked) {
+          // If checkbox is checked, add the value to the array
+          newSelectedFilters[name].push(value);
+        } else {
+          // If checkbox is unchecked, remove the value from the array
+          newSelectedFilters[name] = newSelectedFilters[name].filter(
+            (item) => item !== value
+          );
+        }
+      } else {
+        // Handle other input types
+        newSelectedFilters[name] = value;
+      }
+
+      return newSelectedFilters;
+    });
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    // Get the selected filters from the state variable.
+    const {
+      sector,
+      mode_of_working,
+      location,
+      job_type,
+      job_title,
+      salary_range,
+      skills,
+    } = selectedFilters;
+
+    console.log(selectedFilters);
+
+    // Use the selected filters to query the API for the asked data.
+    JobService.getJobByFilter(selectedFilters);
+  };
+  return (
+    <>
+      {/* Button trigger modal */}
+      <button
         type="button"
         className="btn btn-primary"
         data-bs-toggle="modal"
@@ -10,13 +77,6 @@ export function FilterButton () {
       >
         Filters
       </button>
-    )
-}
-const Filters = () => {
-  return (
-    <>
-      {/* Button trigger modal */}
-      
       {/* Modal */}
       <div
         className="modal fade"
@@ -27,7 +87,7 @@ const Filters = () => {
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
-            <form>
+            <form onSubmit={handleFormSubmit}>
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id="exampleModalLabel">
                   Select the Filters
@@ -47,6 +107,7 @@ const Filters = () => {
                       <label className="form-label">Sector</label>
                       <div className="form-check">
                         <input
+                          onChange={handleFilterChange}
                           type="checkbox"
                           className="form-check-input"
                           name="sector[]"
@@ -56,6 +117,7 @@ const Filters = () => {
                       </div>
                       <div className="form-check">
                         <input
+                          onChange={handleFilterChange}
                           type="checkbox"
                           className="form-check-input"
                           name="sector[]"
@@ -70,6 +132,7 @@ const Filters = () => {
                       <label className="form-label">Mode of Working</label>
                       <div className="form-check">
                         <input
+                          onChange={handleFilterChange}
                           type="checkbox"
                           className="form-check-input"
                           name="mode_of_working[]"
@@ -81,6 +144,7 @@ const Filters = () => {
                       </div>
                       <div className="form-check">
                         <input
+                          onChange={handleFilterChange}
                           type="checkbox"
                           className="form-check-input"
                           name="mode_of_working[]"
@@ -90,6 +154,7 @@ const Filters = () => {
                       </div>
                       <div className="form-check">
                         <input
+                          onChange={handleFilterChange}
                           type="checkbox"
                           className="form-check-input"
                           name="mode_of_working[]"
@@ -119,6 +184,7 @@ const Filters = () => {
                       <label className="form-label">Job Type</label>
                       <div className="form-check">
                         <input
+                          onChange={handleFilterChange}
                           type="checkbox"
                           className="form-check-input"
                           name="job_type[]"
@@ -130,6 +196,7 @@ const Filters = () => {
                       </div>
                       <div className="form-check">
                         <input
+                          onChange={handleFilterChange}
                           type="checkbox"
                           className="form-check-input"
                           name="job_type[]"
@@ -141,6 +208,7 @@ const Filters = () => {
                       </div>
                       <div className="form-check">
                         <input
+                          onChange={handleFilterChange}
                           type="checkbox"
                           className="form-check-input"
                           name="job_type[]"
@@ -156,6 +224,7 @@ const Filters = () => {
                 <div className="mb-3">
                   <label className="form-label">Job Title</label>
                   <input
+                    onChange={handleFilterChange}
                     type="text"
                     className="form-control"
                     name="job_title"
@@ -165,12 +234,14 @@ const Filters = () => {
                   <label className="form-label">Salary Range</label>
                   <div className="input-group">
                     <input
+                      onChange={handleFilterChange}
                       type="number"
                       className="form-control"
                       name="salary_range[min]"
                       placeholder="Min"
                     />
                     <input
+                      onChange={handleFilterChange}
                       type="number"
                       className="form-control"
                       name="salary_range[max]"
@@ -180,7 +251,12 @@ const Filters = () => {
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Skills</label>
-                  <input type="text" className="form-control" name="skills" />
+                  <input
+                    onChange={handleFilterChange}
+                    type="text"
+                    className="form-control"
+                    name="skills"
+                  />
                 </div>
               </div>
               <div className="modal-footer">

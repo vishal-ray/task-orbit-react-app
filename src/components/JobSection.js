@@ -4,12 +4,54 @@ import Filters, { FilterButton } from "./Filters";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { Pagination } from "react-bootstrap";
+import axios from "axios";
 
 function JobSection() {
   const [jobs, setJobs] = useState([]);
 
   const [pageNumber, setPageNumber] = useState(0);
-  const jobsPerPage = 10; // Number of jobs per page
+  const jobsPerPage = 10;
+
+  const [selectedFilters, setSelectedFilters] = useState({
+    sector: [],
+    mode_of_working: [],
+    location: "",
+    job_type: [],
+    job_title: "",
+    salary_range: { min: "", max: "" },
+    skills: "",
+  });
+
+  const handleFilterChange = (event) => {
+    const { name, value, type, checked } = event.target;
+
+    setSelectedFilters((prevState) => {
+      const newSelectedFilters = { ...prevState };
+
+      if (type === "checkbox") {
+        if (!newSelectedFilters[name]) {
+          newSelectedFilters[name] = [];
+        }
+
+        if (checked) {
+          newSelectedFilters[name].push(value);
+        }
+         else {
+          newSelectedFilters[name] = newSelectedFilters[name].filter(
+            (item) => item !== value
+          );
+        }
+      }
+      else if (type === "select") {
+        newSelectedFilters[name] = value;
+      }
+      else {
+        newSelectedFilters[name] = value;
+      }
+
+      return newSelectedFilters;
+    });
+  };
 
   useEffect(() => {
     getAllJobs();
@@ -35,11 +77,98 @@ function JobSection() {
     setPageNumber(selectedPage);
   };
 
-  const [filtersOpen, setFiltersOpen] = React.useState(false);
+  
+  const sendFiltersToBackend = () => {
+    let {
+      sector,
+      mode_of_working,
+      location,
+      job_type,
+      job_title,
+      salary_range,
+      skills,
+    } = selectedFilters;
+    
+   
+    sector = selectedFilters["sector[]"]
+    mode_of_working = selectedFilters["mode_of_working[]"]
+    location = selectedFilters["location"]
+    job_type = selectedFilters["job_type[]"]
+    job_title = selectedFilters["job_title"]
+    let min = selectedFilters["salary_range[min]"]
+    let max = selectedFilters["salary_range[max]"]
+    skills = selectedFilters["skills"]
 
-  const handleOpenFilters = () => {
-    setFiltersOpen(true);
+    console.log(sector,mode_of_working, location, job_type, job_title, min, max, skills)
+    let apiUrl = "http://127.0.0.1:8080/job/filter?";
+    
+    if (sector && sector.length > 0) {
+      apiUrl += `sector=${sector.join(",")}&`;
+    }
+    
+    if (mode_of_working && mode_of_working.length > 0) {
+      apiUrl += `mode_of_working=${mode_of_working.join(",")}&`;
+    }
+    
+    if (location) {
+      apiUrl += `location=${location}&`;
+    }
+    
+    if (job_type && job_type.length > 0) {
+      apiUrl += `job_type=${job_type.join(",")}&`;
+    }
+    
+    if (job_title) {
+      apiUrl += `job_title=${job_title}&`;
+    }
+    
+    if (min) {
+      apiUrl += `min_salary=${min}&`;
+    }
+    
+    if (max) {
+      apiUrl += `max_salary=${max}&`;
+    }
+    
+    if (skills) {
+      apiUrl += `skills=${skills}&`;
+    }
+    
+    if (apiUrl.endsWith("&")) {
+      apiUrl = apiUrl.slice(0, -1);
+    }
+    
+    console.log(apiUrl);
+    
+    axios.get(apiUrl)
+      .then((response) => {
+        const filteredJobs = response.data;
+        console.log(filteredJobs);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
+  
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+
+    // // Use the selected filters to query the API for the asked data.
+    // let filteredJobs = null;
+    //  JobService.getJobByFilter(job_title,job_type,location,mode_of_working,salary_range.min,salary_range.max,sector,skills).then((response) =>{
+    //   filteredJobs = response.data
+    //   console.log(filteredJobs)
+    //  })
+    //  .catch((error) =>{
+    //   console.log(error)
+    //  })
+    sendFiltersToBackend();
+
+    // setJobs(filteredJobs)
+
+  };
+
 
   return (
     <>
@@ -58,8 +187,215 @@ function JobSection() {
           />
         </div>
         <div className="col-sm-3">
-          <FilterButton />
-          <Filters />
+          <>
+            <button
+              type="button"
+              className="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              Filters
+            </button>
+            <div
+              className="modal fade"
+              id="exampleModal"
+              tabIndex={-1}
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                  <form onSubmit={(e) => handleFormSubmit(e)}>
+                    <div className="modal-header">
+                      <h1 className="modal-title fs-5" id="exampleModalLabel">
+                        Select the Filters
+                      </h1>
+                      <button
+                        type="button"
+                        className="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      />
+                    </div>
+                    <div className="modal-body">
+                      <div className="row">
+                        <div className="col-md-6">
+                          <div className="mb-3">
+                            <label className="form-label">Sector</label>
+                            <div className="form-check">
+                              <input
+                                onChange={(e) => handleFilterChange(e)}
+                                type="checkbox"
+                                className="form-check-input"
+                                name="sector[]"
+                                value="govt"
+                              />
+                              <label className="form-check-label">Govt</label>
+                            </div>
+                            <div className="form-check">
+                              <input
+                                onChange={(e) => handleFilterChange(e)}
+                                type="checkbox"
+                                className="form-check-input"
+                                name="sector[]"
+                                value="private"
+                              />
+                              <label className="form-check-label">
+                                Private
+                              </label>
+                            </div>
+                          </div>
+
+                          <div className="mb-3">
+                            <label className="form-label">
+                              Mode of Working
+                            </label>
+                            <div className="form-check">
+                              <input
+                                onChange={(e) => handleFilterChange(e)}
+                                type="checkbox"
+                                className="form-check-input"
+                                name="mode_of_working[]"
+                                value="work_from_home"
+                              />
+                              <label className="form-check-label">
+                                Work from home
+                              </label>
+                            </div>
+                            <div className="form-check">
+                              <input
+                                onChange={(e) => handleFilterChange(e)}
+                                type="checkbox"
+                                className="form-check-input"
+                                name="mode_of_working[]"
+                                value="office"
+                              />
+                              <label className="form-check-label">Office</label>
+                            </div>
+                            <div className="form-check">
+                              <input
+                                onChange={(e) => handleFilterChange(e)}
+                                type="checkbox"
+                                className="form-check-input"
+                                name="mode_of_working[]"
+                                value="hybrid"
+                              />
+                              <label className="form-check-label">Hybrid</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="col-md-6">
+                          <div className="mb-4">
+                            <label className="form-label">Location</label>
+                            <select
+                              className="form-select"
+                              name="location"
+                              id="location"
+                              onChange={(e) => handleFilterChange(e)}
+                            >
+                              <option value="india">India</option>
+                              <option value="remote">Remote</option>
+                            </select>
+                          </div>
+
+                          <div className="mb-3">
+                            <label className="form-label">Job Type</label>
+                            <div className="form-check">
+                              <input
+                                onChange={(e) => handleFilterChange(e)}
+                                type="checkbox"
+                                className="form-check-input"
+                                name="job_type[]"
+                                value="full_time_permanent"
+                              />
+                              <label className="form-check-label">
+                                Full time / permanent
+                              </label>
+                            </div>
+                            <div className="form-check">
+                              <input
+                                onChange={(e) => handleFilterChange(e)}
+                                type="checkbox"
+                                className="form-check-input"
+                                name="job_type[]"
+                                value="contract_temp"
+                              />
+                              <label className="form-check-label">
+                                Contract / Temp
+                              </label>
+                            </div>
+                            <div className="form-check">
+                              <input
+                                onChange={(e) => handleFilterChange(e)}
+                                type="checkbox"
+                                className="form-check-input"
+                                name="job_type[]"
+                                value="internship"
+                              />
+                              <label className="form-check-label">
+                                Internship
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mb-3">
+                        <label className="form-label">Job Title</label>
+                        <input
+                          onChange={(e) => handleFilterChange(e)}
+                          type="text"
+                          className="form-control"
+                          name="job_title"
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label className="form-label">Salary Range</label>
+                        <div className="input-group">
+                          <input
+                            onChange={(e) => handleFilterChange(e)}
+                            type="number"
+                            className="form-control"
+                            name="salary_range[min]"
+                            placeholder="Min"
+                          />
+                          <input
+                            onChange={(e) => handleFilterChange(e)}
+                            type="number"
+                            className="form-control"
+                            name="salary_range[max]"
+                            placeholder="Max"
+                          />
+                        </div>
+                      </div>
+                      <div className="mb-3">
+                        <label className="form-label">Skills</label>
+                        <input
+                          onChange={(e) => handleFilterChange(e)}
+                          type="text"
+                          className="form-control"
+                          name="skills"
+                        />
+                      </div>
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button type="submit" className="btn btn-primary">
+                        Filter
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </>
         </div>
       </div>
 
@@ -100,7 +436,7 @@ function JobSection() {
                   <h5 className="card-title fw-bold">{job.institute}</h5>
                   <p className="card-text">
                     <b>
-                      {job.title} | Pay: {job.payscale} | State: {job.state} |
+                      {job.title} | Pay: {job.payscale} | Location: {job.location} |
                       Department: {job.department} | Vacancy:{" "}
                       {job.vacancyNumber}
                     </b>

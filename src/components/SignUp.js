@@ -6,14 +6,13 @@ import {websiteThemeColor} from '/home/vishal_ray/task-orbit-react-app/src/Globa
 
 const SignUp = () => {
 
-  const[firstName,setFirstName] = useState('') 
-  const[lastName,setLastName] = useState('')
+  const[name,setName] = useState('') 
   const[emailid,setEmailID] = useState('')
   const[password,setPassword] = useState('')
   const navigate = useNavigate();
 
   const saveUser = (e) =>{
-    const user = {firstName,lastName,emailid,password}
+    const user = {name,emailid,password}
     AuthService.createUser(user).then((response)=>
     {
       console.log("User Data Sent")
@@ -39,22 +38,11 @@ const SignUp = () => {
                 <div className="mb-3">
                   <input
                    type="text"
-                   id="firstName" 
+                   id="name" 
                    className="form-control" 
-                   placeholder="First Name" 
-                   value={firstName} 
-                   onChange={(e)=>setFirstName(e.target.value)}
-                   required />
-                </div>
-
-                <div className="mb-3">                
-                  <input
-                   type="text"
-                   id="lastName" 
-                   className="form-control" 
-                   placeholder="Last Name" 
-                   value={lastName} 
-                   onChange={(e)=>setLastName(e.target.value)}
+                   placeholder="Your Name" 
+                   value={name} 
+                   onChange={(e)=>setName(e.target.value)}
                    required />
                 </div>
                 

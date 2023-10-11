@@ -35,7 +35,7 @@ const JobDescription = () => {
                 <JobDetailRow label="Institute" value={job.institute} />
                 <JobDetailRow label="Job Title" value={job.title} />
                 <JobDetailRow label="Pay Scale" value={job.payscale} />
-                <JobDetailRow label="State" value={job.state} />
+                <JobDetailRow label="Location" value={job.location} />
                 <JobDetailRow label="Department" value={job.department} />
                 <JobDetailRow
                   label="Vacancy Number"
@@ -68,13 +68,8 @@ const JobDescription = () => {
             <Card.Body>
               <h4 className="fw-bold text-center mb-4">Minimum Criteria</h4>
               <ListGroup variant="flush">
-                <JobDetailRow label="Experience" value={job.minCriteria} />
-                <JobDetailRow
-                  label="Educational Qualification"
-                  value={job.minCriteria}
-                />
-                <JobDetailRow label="Age Limit" value={job.minCriteria} />
-                <JobDetailRow label="Nationality" value={job.minCriteria} />
+                <JobDetailRow  value={job.minCriteria} />
+                
               </ListGroup>
             </Card.Body>
           </Card>

@@ -10,6 +10,7 @@ class JobService{
     {
         return axios.get(BASE_URL + `/${id}`);
     }
+    
 }
 
 export default new JobService();

@@ -1,48 +1,27 @@
-import React from "react"
-import {websiteThemeColor} from '/home/vishal_ray/task-orbit-react-app/src/GlobalVariables.js'
-import "../css/style.css"
+import React from "react";
+import { websiteThemeColor } from "/home/vishal_ray/task-orbit-react-app/src/GlobalVariables.js";
+import "../css/style.css";
 
 const Footer = () => {
-    return(
-      <div>
-            <link
-  href="https://fonts.googleapis.com/css?family=Nunito&display=swap"
-  rel="stylesheet"
-/>
-    <div className="container-fluid  p-2 text-white taskorbitbg" style={{fontFamily: '"Nunito", sans-serif'}}>
-        <footer className="container">
-          
-          <div className="d-flex flex-column flex-sm-row justify-content-center pt-4 ">
+  return (
+    <div>
+      <link
+        href="https://fonts.googleapis.com/css?family=Nunito&display=swap"
+        rel="stylesheet"
+      />
+      <div
+        className="container-fluid p-2 text-white taskorbitbg"
+        style={{ fontFamily: '"Nunito", sans-serif' }}
+      >
+        <footer className="container-fluid">
+          <div className="d-flex flex-column justify-content-center flex-sm-row pt-4">
             <p>© 2023 TaskOrbit, Inc. All rights reserved.</p>
-            <ul className="list-unstyled d-flex">
-              <li className="ms-3">
-                <a className="link-body-emphasis" href="#">
-                  <svg className="bi" width={24} height={24}>
-                    <use xlinkHref="#twitter" />
-                  </svg>
-                </a>
-              </li>
-              <li className="ms-3">
-                <a className="link-body-emphasis" href="#">
-                  <svg className="bi" width={24} height={24}>
-                    <use xlinkHref="#instagram" />
-                  </svg>
-                </a>
-              </li>
-              <li className="ms-3">
-                <a className="link-body-emphasis" href="#">
-                  <svg className="bi" width={24} height={24}>
-                    <use xlinkHref="#facebook" />
-                  </svg>
-                </a>
-              </li>
-            </ul>
+            
           </div>
         </footer>
       </div>
     </div>
-    
-    );
+  );
 };
 
 export default Footer;
