@@ -5,8 +5,10 @@ import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { Pagination } from "react-bootstrap";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function JobSection() {
+  const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
 
   const [pageNumber, setPageNumber] = useState(0);
@@ -17,9 +19,8 @@ function JobSection() {
     mode_of_working: [],
     location: "",
     job_type: [],
-    job_title: "",
-    salary_range: { min: "", max: "" },
-    skills: "",
+    search: "",
+    salary_range: { min: "", max: "" }
   });
 
   const handleFilterChange = (event) => {
@@ -35,17 +36,14 @@ function JobSection() {
 
         if (checked) {
           newSelectedFilters[name].push(value);
-        }
-         else {
+        } else {
           newSelectedFilters[name] = newSelectedFilters[name].filter(
             (item) => item !== value
           );
         }
-      }
-      else if (type === "select") {
+      } else if (type === "select") {
         newSelectedFilters[name] = value;
-      }
-      else {
+      } else {
         newSelectedFilters[name] = value;
       }
 
@@ -63,6 +61,8 @@ function JobSection() {
         setJobs(response.data);
       })
       .catch((error) => {
+        if(error.message == "Network Error")
+          navigate("/network-error")
         console.log(error);
       });
   };
@@ -77,82 +77,92 @@ function JobSection() {
     setPageNumber(selectedPage);
   };
 
-  
   const sendFiltersToBackend = () => {
     let {
       sector,
       mode_of_working,
       location,
       job_type,
-      job_title,
       salary_range,
-      skills,
+      search
     } = selectedFilters;
-    
-   
-    sector = selectedFilters["sector[]"]
-    mode_of_working = selectedFilters["mode_of_working[]"]
-    location = selectedFilters["location"]
-    job_type = selectedFilters["job_type[]"]
-    job_title = selectedFilters["job_title"]
-    let min = selectedFilters["salary_range[min]"]
-    let max = selectedFilters["salary_range[max]"]
-    skills = selectedFilters["skills"]
 
-    console.log(sector,mode_of_working, location, job_type, job_title, min, max, skills)
-    let apiUrl = "http://127.0.0.1:8080/job/filter?";
+    sector = selectedFilters["sector[]"];
+    mode_of_working = selectedFilters["mode_of_working[]"];
+    location = selectedFilters["location"];
+    job_type = selectedFilters["job_type[]"];
+    search = selectedFilters["search"];
+    let min = selectedFilters["salary_range[min]"];
+    let max = selectedFilters["salary_range[max]"];
     
+
+    console.log(
+      sector,
+      mode_of_working,
+      location,
+      search,
+      min,
+      max
+    );
+    let apiUrl = "http://127.0.0.1:8080/job/filter?";
+
     if (sector && sector.length > 0) {
       apiUrl += `sector=${sector.join(",")}&`;
     }
-    
+
     if (mode_of_working && mode_of_working.length > 0) {
       apiUrl += `mode_of_working=${mode_of_working.join(",")}&`;
     }
-    
+
     if (location) {
       apiUrl += `location=${location}&`;
     }
-    
+
     if (job_type && job_type.length > 0) {
       apiUrl += `job_type=${job_type.join(",")}&`;
     }
-    
-    if (job_title) {
-      apiUrl += `job_title=${job_title}&`;
+
+    if (search) {
+      apiUrl += `search=${search}&`;
     }
-    
+
     if (min) {
       apiUrl += `min_salary=${min}&`;
     }
-    
+
     if (max) {
       apiUrl += `max_salary=${max}&`;
     }
-    
-    if (skills) {
-      apiUrl += `skills=${skills}&`;
-    }
-    
+
     if (apiUrl.endsWith("&")) {
       apiUrl = apiUrl.slice(0, -1);
     }
-    
+
     console.log(apiUrl);
-    
-    axios.get(apiUrl)
+
+    axios
+      .get(apiUrl)
       .then((response) => {
         const filteredJobs = response.data;
         console.log(filteredJobs);
+        if(filteredJobs.data == null)
+        {
+          document.getElementById("filter-response").innerText = "We Couldn't find any matching jobs, anyway you can browse through the following jobs"
+        }
       })
       .catch((error) => {
+        if(error.message == "Network Error")
+        {
+          navigate("/network-error")
+          return;
+        }
         console.log(error);
       });
+      
   };
-  
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
 
     // // Use the selected filters to query the API for the asked data.
     // let filteredJobs = null;
@@ -166,26 +176,29 @@ function JobSection() {
     sendFiltersToBackend();
 
     // setJobs(filteredJobs)
-
   };
-
 
   return (
     <>
+    <form onSubmit={(e) => handleFormSubmit(e)}>
       <div className="d-flex justify-content-between align-items-center container">
         <div className="col-sm-9">
+        
           <input
-            type="search"
+            type="text"
+            onChange={(e) => handleFilterChange(e)}
             className="form-control mt-2 mb-2 me-2"
             style={{
               width: "98%",
               backgroundColor: "#ffffff",
               color: "#333333",
             }}
-            placeholder="Search"
+            placeholder="Search for Job title / Profile / Department"
             aria-label="Search"
-          />
+            name="search"
+          />    
         </div>
+
         <div className="col-sm-3">
           <>
             <button
@@ -205,7 +218,7 @@ function JobSection() {
             >
               <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
-                  <form onSubmit={(e) => handleFormSubmit(e)}>
+                  
                     <div className="modal-header">
                       <h1 className="modal-title fs-5" id="exampleModalLabel">
                         Select the Filters
@@ -341,15 +354,7 @@ function JobSection() {
                         </div>
                       </div>
 
-                      <div className="mb-3">
-                        <label className="form-label">Job Title</label>
-                        <input
-                          onChange={(e) => handleFilterChange(e)}
-                          type="text"
-                          className="form-control"
-                          name="job_title"
-                        />
-                      </div>
+                      
                       <div className="mb-3">
                         <label className="form-label">Salary Range</label>
                         <div className="input-group">
@@ -358,26 +363,22 @@ function JobSection() {
                             type="number"
                             className="form-control"
                             name="salary_range[min]"
-                            placeholder="Min"
+                            placeholder="Min : 10,000"
+                            defaultValue={10000}
+                            min={10000}
                           />
                           <input
                             onChange={(e) => handleFilterChange(e)}
                             type="number"
                             className="form-control"
                             name="salary_range[max]"
-                            placeholder="Max"
+                            placeholder="Max : 1,50,000"
+                            defaultValue={150000}
+                            max={150000}
                           />
                         </div>
                       </div>
-                      <div className="mb-3">
-                        <label className="form-label">Skills</label>
-                        <input
-                          onChange={(e) => handleFilterChange(e)}
-                          type="text"
-                          className="form-control"
-                          name="skills"
-                        />
-                      </div>
+                      
                     </div>
                     <div className="modal-footer">
                       <button
@@ -391,13 +392,18 @@ function JobSection() {
                         Filter
                       </button>
                     </div>
-                  </form>
+                  
                 </div>
               </div>
             </div>
           </>
         </div>
       </div>
+      </form>
+
+            
+
+            {/* Jobs Section */}
 
       <div style={{ backgroundColor: "#ffffff", marginTop: 20 }}>
         <div
@@ -408,6 +414,7 @@ function JobSection() {
             fontFamily: "Arial, sans-serif",
           }}
         >
+          <div id="filter-response"></div>
           <div
             className="card"
             style={{
@@ -417,6 +424,7 @@ function JobSection() {
             }}
           >
             <div className="card-body d-flex justify-content-between align-items-center">
+              
               <h3
                 className="taskorbit-text"
                 style={{ fontFamily: "Arial, sans-serif", color: "#333333" }}
@@ -436,8 +444,8 @@ function JobSection() {
                   <h5 className="card-title fw-bold">{job.institute}</h5>
                   <p className="card-text">
                     <b>
-                      {job.title} | Pay: {job.payscale} | Location: {job.location} |
-                      Department: {job.department} | Vacancy:{" "}
+                      {job.title} | Pay: {job.payscale} | Location:{" "}
+                      {job.location} | Department: {job.department} | Vacancy:{" "}
                       {job.vacancyNumber}
                     </b>
                   </p>

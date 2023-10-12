@@ -9,6 +9,7 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const signin = (e) => {
+    e.preventDefault();
     console.log("s");
     const user = { emailId, password };
     console.log(user);
@@ -19,6 +20,14 @@ const SignIn = () => {
         navigate("/");
       })
       .catch((error) => {
+        if(error.message == "Network Error")
+        {
+          navigate("/network-error")
+          return;
+        }
+          
+        document.getElementById("res_box").innerHTML = error.response.data;
+        document.getElementById("res_box").style.color = "red";
         console.log(error);
       });
   };
@@ -32,10 +41,10 @@ const SignIn = () => {
               <h2 className="card-title text-center mb-4 taskorbit-text">
                 Sign In
               </h2>
-              <form>
+              <form onSubmit={(e) => signin(e)}>
                 <div className="mb-3">
                   <input
-                    type="emailid"
+                    type="email"
                     id="email"
                     className="form-control"
                     placeholder="hello@gmail.com"
@@ -57,14 +66,12 @@ const SignIn = () => {
                   />
                 </div>
                 <div className="d-grid gap-2">
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={(e) => signin(e)}
-                  >
+                  <button type="submit" className="btn btn-primary">
                     Sign In
                   </button>
                 </div>
+                <br />
+                <div id="res_box" className="text-align-center"></div>
               </form>
             </div>
           </div>

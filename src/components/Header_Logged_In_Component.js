@@ -83,13 +83,7 @@ const Header_Logged_In_Component = (props) => {
               </ul>
             </li> */}
           </ul>
-          <input
-            type="search"
-            className="form-control me-2 position-absolute top-5 start-50 translate-middle-x"
-            style={{ width: "30%" }}
-            placeholder="Search"
-            aria-label="Search"
-          />
+          
           <form className="d-flex justify-content-end ">
             <button
               className="btn btn-outline-light"

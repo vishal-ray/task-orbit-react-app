@@ -21,6 +21,11 @@ const JobDescription = () => {
         console.log(response.data);
       })
       .catch((error) => {
+        if(error.message == "Network Error")
+        {
+          navigate("/network-error")
+          return;
+        }
         console.log(error);
       });
   };
