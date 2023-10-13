@@ -1,6 +1,5 @@
 import React from 'react';
-import JobSection from './JobSection';
-import {websiteThemeColor} from '/home/vishal_ray/task-orbit-react-app/src/GlobalVariables.js'
+import {websiteThemeColor} from '../GlobalVariables.js'
 
 const Sidebar = () => {
   return (

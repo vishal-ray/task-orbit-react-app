@@ -1,5 +1,4 @@
 import React from "react";
-import { websiteThemeColor } from "/home/vishal_ray/task-orbit-react-app/src/GlobalVariables.js";
 import "../css/style.css";
 
 const Footer = () => {
@@ -16,7 +15,6 @@ const Footer = () => {
         <footer className="container-fluid">
           <div className="d-flex flex-column justify-content-center flex-sm-row pt-4">
             <p>© 2023 TaskOrbit, Inc. All rights reserved.</p>
-            
           </div>
         </footer>
       </div>

@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../serivces/AuthService";
-import Swal from "sweetalert2";
-import { websiteThemeColor } from "/home/vishal_ray/task-orbit-react-app/src/GlobalVariables.js";
 
 const SignUp = () => {
   const [name, setName] = useState("");
