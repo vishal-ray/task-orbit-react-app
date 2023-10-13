@@ -6,6 +6,7 @@ import ReactPaginate from "react-paginate";
 import { Pagination } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../css/style.css"
 
 function JobSection() {
   const navigate = useNavigate();
@@ -434,53 +435,36 @@ function JobSection() {
             </div>
           </div>
           {displayedJobs.map((job) => (
-            <div
-              className="card taskorbit-text"
-              style={{ backgroundColor: "#ffffff", border: "none" }}
-              key={job.id}
-            >
-              <div className="card-body d-flex justify-content-between align-items-center">
-                <div>
-                  <h5 className="card-title fw-bold">{job.institute}</h5>
-                  <p className="card-text">
-                    <b>
-                      {job.title} | Pay: {job.payscale} | Location:{" "}
-                      {job.location} | Department: {job.department} | Vacancy:{" "}
-                      {job.vacancyNumber}
-                    </b>
-                  </p>
-                  <p className="card-text">
-                    Last Date: {job.lastDateToApply}
-                    {"        "}
-                    <a
-                      href={job.advertisementLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ color: "#007BFF" }}
-                    >
-                      {" "}
-                      Notification Link
-                    </a>
-                  </p>
-                </div>
-                <div>
-                  <Link
-                    className="btn btn-outline-primary me-2"
-                    to={`/job/${job.id}`}
-                    // target="_blank"
-                  >
-                    More Info
-                  </Link>
+            <div className="card taskorbit-text" style={{ backgroundColor: "#ffffff", border: "none" }} key={job.id}>
+            <div className="card-body d-flex justify-content-between align-items-center">
+              <div>
+                <h5 className="card-title fw-bold">{job.institute}</h5>
+                <p className="card-text">
+                  <b>
+                    {job.title} | Pay: {job.payscale} | Location: {job.location} | Department: {job.department} | Vacancy: {job.vacancyNumber}
+                  </b>
+                </p>
+                <p className="card-text">
+                  Last Date: {job.lastDateToApply}
+                  {"    "}
                   <a
-                    className="btn btn-primary"
-                    href={job.applyLink}
+                    href={job.advertisementLink}
                     target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "#007BFF" }}
                   >
-                    Apply Here
+                    {" "}
+                    Notification Link
                   </a>
-                </div>
+                </p>
+              </div>
+              <div>
+                <Link className="btn btn-outline-primary me-2" to={`/job/${job.id}`}>More Info</Link>
+                <a className="btn btn-primary" href={job.applyLink} target="_blank">Apply Here</a>
               </div>
             </div>
+          </div>
+          
           ))}
         </div>
 
